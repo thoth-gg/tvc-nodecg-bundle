@@ -67,6 +67,10 @@ if (buildGraphics) {
       defaultConfig: '@parcel/config-default',
       additionalReporters: [
         {
+          packageName: "parcel-reporter-static-files-copy",
+          resolveFrom: fileURLToPath(import.meta.url),
+        },
+        {
           packageName: '@parcel/reporter-cli',
           resolveFrom: fileURLToPath(import.meta.url),
         },
