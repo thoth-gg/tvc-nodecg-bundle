@@ -44,9 +44,10 @@ import { AwardPresentScene } from "./src/scenes/award-present.ts";
 import { MatchOverlayScene } from "./src/scenes/match-overlay.ts";
 import { globalPrepare } from "./src/global/index.ts";
 import { DrawableEntity } from "./src/interfaces/entity.ts";
+import { ReplayScene } from "./src/scenes/replay.ts";
 
 const defaultValue = `{
-  "scene": "about-thoth"
+  "scene": "replay"
 }
 `;
 // State
@@ -72,7 +73,7 @@ const sketch = (p5: p5js) => {
   };
   p5.setup = () => {
     renderer = p5.createCanvas(1920, 1080);
-    setScene({ scene: "about-thoth" });
+    setScene({ scene: "replay" });
 
     renderer.elt.addEventListener("click", async () => {
       await navigator.clipboard.writeText(
@@ -83,6 +84,17 @@ const sketch = (p5: p5js) => {
       p5.fullscreen(true);
     });
   };
+
+  let cnt = 0;
+  p5.keyPressed = () => {
+    cnt++;
+    console.log(cnt);
+    if (cnt % 2 === 0) { 
+      setScene({ scene: "replay" });
+    } else {
+      setScene({ scene: "schedule" });
+    }
+  }
 
   p5.draw = () => {
     stats.begin();
@@ -153,6 +165,9 @@ const sketch = (p5: p5js) => {
         break;
       case "overlay":
         currentScene = new OverlayScene(p5, data.type);
+        break;
+      case "replay":
+        currentScene = new ReplayScene(p5);
         break;
     }
   }

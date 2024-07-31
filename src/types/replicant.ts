@@ -1,4 +1,4 @@
-export interface ReplicantMap {
+export type ReplicantMap = {
   program: number;
   preview: number;
   prompter: string;

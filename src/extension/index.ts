@@ -1,7 +1,7 @@
 import type NodeCG from '@nodecg/types';
 import { Atem } from 'atem-connection';
 
-const isAtemEnabled = true;
+const isAtemEnabled = false;
 
 module.exports = async function (nodecg: NodeCG.ServerAPI) {
   const program = nodecg.Replicant<number>('program');

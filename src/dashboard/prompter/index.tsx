@@ -9,7 +9,7 @@ import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Typography from '@mui/joy/Typography';
-import { useReplicant } from '../../hooks';
+import { useReplicant } from '../../hooks/use-replicant';
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<Panel />);

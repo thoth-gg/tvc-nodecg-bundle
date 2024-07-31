@@ -5,7 +5,7 @@ import BuildIcon from '@mui/icons-material/Build';
 import Box from '@mui/joy/Box';
 import '@fontsource/inter';
 import { createRoot } from 'react-dom/client';
-import { useReplicant } from '../../hooks';
+import { useReplicant } from '../../hooks/use-replicant';
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<TechPause />);

@@ -3,7 +3,7 @@ import Button from '@mui/joy/Button';
 import Box from '@mui/joy/Box';
 import '@fontsource/inter';
 import { createRoot } from 'react-dom/client';
-import { useReplicant } from '../../hooks';
+import { useReplicant } from '../../hooks/use-replicant';
 import Typography from '@mui/joy/Typography';
 
 const root = createRoot(document.getElementById('root')!);

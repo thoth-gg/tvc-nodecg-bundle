@@ -59,7 +59,7 @@
     ],
     "graphics": [
       {
-        "file": "index.html",
+        "file": "screen.html",
         "width": 1920,
         "height": 1080,
         "singleInstance": false
@@ -125,6 +125,7 @@
     "nodemon": "*",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "trash-cli": "*",
+    "ts-nodecg": "^0.3.1",
     "typescript": "^5.1.3"
   },
   "repository": "https://github.com/nodecg/nodecg.git",

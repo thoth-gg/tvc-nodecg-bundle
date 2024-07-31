@@ -15,6 +15,7 @@ export let reticule: Image;
 export let thothImage: Image;
 export let vs: Image;
 export let kugai: Image;
+export let replay: Image;
 
 export const AwardTitle: {
   Mvp: Image;
@@ -122,4 +123,6 @@ export function preload(p5: p5js) {
   BattleOverlay.a_scs_bop_d = p5.loadImage("images/overlay/a_scs-bop_d.png"),
   BattleOverlay.d_scs_bop_a = p5.loadImage("images/overlay/d_scs-bop_a.png");
   kugai = p5.loadImage("images/fullsize-players/kugai.png");
+
+  replay = p5.loadImage("images/overlay/replay.png");
 }

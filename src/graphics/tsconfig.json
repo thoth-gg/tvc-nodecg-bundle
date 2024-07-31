@@ -1,8 +1,8 @@
 {
+	"extends": "../../tsconfig.build.json",
 	"compilerOptions": {
 		"noEmit": true,
 		"allowImportingTsExtensions": true
 	},
-	"extends": "../../tsconfig.build.json",
-	"include": ["**/*.tsx", "**/*.ts", "../types/**/*.ts", "../../node_modules/@nodecg/types/augment-window.d.ts", "../replicant.ts"]
+	"include": ["./**/*", "../types/**/*.ts", "../../node_modules/@nodecg/types/augment-window.d.ts"],
 }
