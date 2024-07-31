@@ -4,5 +4,6 @@
 		"noEmit": true,
 		"allowImportingTsExtensions": true
 	},
-	"include": ["./**/*", "../types/**/*.ts", "../../node_modules/@nodecg/types/augment-window.d.ts"],
+	"include": ["./**/*", "../types/**/*.ts", "../../node_modules/@types/node/index.d.ts"],
+	"exclude": ["node_modules"]
 }

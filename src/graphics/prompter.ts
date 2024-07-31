@@ -1,4 +1,4 @@
-const prompterReplicant = nodecg.Replicant<string>('prompter');
+const prompterReplicant = nodecg.Replicant('prompter');
 const main = document.querySelector('main');
 prompterReplicant.on('change', (newVal) => {
   if (!main) return;

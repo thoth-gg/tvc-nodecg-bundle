@@ -14,6 +14,7 @@ export class AnimateVideo extends DrawableEntity {
     if (isLoop) {
       this.video.loop();
     } else {
+      this.video.stop();
       this.video.play();
     }
   }

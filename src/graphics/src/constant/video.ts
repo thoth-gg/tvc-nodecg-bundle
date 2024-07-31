@@ -10,12 +10,12 @@ export function preload(p5: p5js) {
     background.volume(0);
     background.loop();
   });
-  replay = p5.createVideo("videos/replay.mp4", () => {
-    replay.hide();
+  replay = p5.createVideo("videos/replay.webm", () => {
+    replay.hide(); 
     replay.volume(0);
     replay.play();
   });
-  roundwin = p5.createVideo("videos/roundwin.mp4", () => {
+  roundwin = p5.createVideo("videos/roundwin.webm", () => {
     roundwin.hide();
     roundwin.volume(0);
     roundwin.play();

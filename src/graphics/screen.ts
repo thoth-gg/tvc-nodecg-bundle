@@ -42,6 +42,7 @@ import { ThothIconScene } from "./src/scenes/thoth-icon.ts";
 import { MapWinnerScene } from "./src/scenes/map-winner.ts";
 import { AwardPresentScene } from "./src/scenes/award-present.ts";
 import { MatchOverlayScene } from "./src/scenes/match-overlay.ts";
+import { GreenScene } from "./src/scenes/green.ts";
 import { globalPrepare } from "./src/global/index.ts";
 import { DrawableEntity } from "./src/interfaces/entity.ts";
 import { ReplayScene } from "./src/scenes/replay.ts";
@@ -73,7 +74,7 @@ const sketch = (p5: p5js) => {
   };
   p5.setup = () => {
     renderer = p5.createCanvas(1920, 1080);
-    setScene({ scene: "replay" });
+    setScene({ scene: "green" });
 
     renderer.elt.addEventListener("click", async () => {
       await navigator.clipboard.writeText(
@@ -90,9 +91,9 @@ const sketch = (p5: p5js) => {
     cnt++;
     console.log(cnt);
     if (cnt % 2 === 0) { 
-      setScene({ scene: "replay" });
+      setScene({ scene: "green" });
     } else {
-      setScene({ scene: "schedule" });
+      setScene({ scene: "replay" });
     }
   }
 
@@ -165,6 +166,9 @@ const sketch = (p5: p5js) => {
         break;
       case "overlay":
         currentScene = new OverlayScene(p5, data.type);
+        break;
+      case "green":
+        currentScene = new GreenScene(p5);
         break;
       case "replay":
         currentScene = new ReplayScene(p5);

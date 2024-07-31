@@ -18,6 +18,6 @@
 		"sourceMap": true,
 		"inlineSourceMap": false,
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx", "node_modules/@nodecg/types/augment-window.d.ts"],
-	"exclude": ["node_modules"]
+	"include": ["src/**/*.ts", "src/**/*.tsx", "node_modules/@types/node/index.d.ts"],
+	"exclude": ["node_modules", "src/graphics/**/*", "src/dashboard/**/*", "src/extension/**/*"],
 }

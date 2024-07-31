@@ -17,7 +17,7 @@ export class ReplayScene extends DrawableEntitySet {
       new AnimateImage(p5, 
         replayImage, 
         [
-          new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080, alpha: 0, sleep: 10 }),
+          new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080, alpha: 0, sleep: 100 }),
           new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080 }),
         ],
         { easing: 0.1 }
