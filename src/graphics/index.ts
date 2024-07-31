@@ -1,16 +1,10 @@
-import type { ExampleReplicant } from '../types/schemas';
-
 import Stats from "stats.js";
 import p5js, { Renderer } from "p5";
 
-// You can access the NodeCG api anytime from the `window.nodecg` object
-// Or just `nodecg` for short. Like this!:
-nodecg.log.info("Here's an example of using NodeCG's logging API!");
-
-const exampleReplicant = nodecg.Replicant<ExampleReplicant>('exampleReplicant');
-exampleReplicant.on('change', (newVal) => {
-	console.log(newVal);
-});
+// const exampleReplicant = nodecg.Replicant<ExampleReplicant>('exampleReplicant');
+// exampleReplicant.on('change', (newVal) => {
+// 	console.log(newVal);
+// });
 
 // Component
 import { preload as fontPreload } from "./src/constant/font.ts";
@@ -56,7 +50,7 @@ const defaultValue = `{
 }
 `;
 // State
-let debug = document.location.search.includes("debug");
+const debug = document.location.search.includes("debug");
 
 // For debug
 const stats = new Stats();
@@ -80,8 +74,8 @@ const sketch = (p5: p5js) => {
     renderer = p5.createCanvas(1920, 1080);
     setScene({ scene: "about-thoth" });
 
-    renderer.elt.addEventListener("click", () => {
-      navigator.clipboard.writeText(
+    renderer.elt.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(
         `${Math.round(p5.mouseX)}, ${Math.round(p5.mouseY)}`
       );
     });
@@ -96,7 +90,7 @@ const sketch = (p5: p5js) => {
     stats.end();
   };
 
-  async function setScene(data: any) {
+  function setScene(data: any) {
     const player = searchPlayer(data.player);
     switch (data.scene) {
       case "about-game":

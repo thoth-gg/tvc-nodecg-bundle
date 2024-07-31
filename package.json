@@ -46,7 +46,14 @@
         "name": "tech-pause",
         "title": "Tech Pause",
         "width": 2,
-        "file": "tech-pause/tech-pause.html",
+        "file": "tech-pause/index.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "valorant-scene-switcher",
+        "title": "VALORANT Scene SW",
+        "file": "valorant-scene-switcher/index.html",
+        "fullbleed": true,
         "headerColor": "#525F78"
       }
     ],
@@ -96,6 +103,7 @@
     "@mui/x-date-pickers": "^7.5.0",
     "@types/react": "*",
     "@types/react-dom": "*",
+    "atem-connection": "^3.5.0",
     "dayjs": "^1.11.11",
     "p5": "^1.9.3",
     "react": "*",
