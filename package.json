@@ -108,6 +108,7 @@
     "p5": "^1.9.4",
     "react": "*",
     "react-dom": "*",
+    "serialport": "^12.0.0",
     "stats.js": "^0.17.0",
     "ts-node": "*"
   },
@@ -119,6 +120,7 @@
     "@parcel/validator-typescript": "*",
     "@types/node": "^20",
     "@types/p5": "^1.7.6",
+    "@types/serialport": "^8.0.5",
     "@types/stats.js": "^0.17.3",
     "concurrently": "*",
     "glob": "^11.0.0",
