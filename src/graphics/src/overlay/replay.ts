@@ -1,53 +1,50 @@
-import { AnimateRect, AnimateRectKey } from "../entities/animate-rect.ts";
-import { AnimateText, AnimateTextKey } from "../entities/animate-text.ts";
 import { noto } from "../constant/font.ts";
 import { DrawableOverlay } from "../interfaces/entity.ts";
 import p5js from "p5";
+import { AnimateVideo } from "../entities/animate-video.ts";
+import { AnimateImage, AnimateImageKey } from "../entities/animate-image.ts";
+
+import { replay as replayImage } from "../constant/image.ts";
+import { replay as replayVideo } from "../constant/video.ts";
 
 export class ReplayOverlay extends DrawableOverlay {
+  isStopped: boolean = false;
+
   constructor(p5: p5js) {
     super(p5);
     this.entityList = [
-      new AnimateRect(
-        p5,
+      new AnimateImage(p5, 
+        replayImage, 
         [
-          new AnimateRectKey({ x: 960, y: -10, width: 0, height: 1100, sleep: 20 }),
-          new AnimateRectKey({ x: 960, y: -10, width: 1000, height: 1100, sleep: 0 }),
-          new AnimateRectKey({ x: 1960, y: -10, width: 0, height: 1100, sleep: 50 }),
+          new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080, alpha: 0, sleep: 100 }),
+          new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080 }),
         ],
-        {
-          color: p5.color("#00130E"),
-          easing: 0.15,
-        }
+        { easing: 0.1 }
       ),
-      new AnimateRect(
-        p5,
-        [
-          new AnimateRectKey({ x: 960, y: -10, width: 0, height: 1100, sleep: 20 }),
-          new AnimateRectKey({ x: -40, y: -10, width: 1000, height: 1100, sleep: 0 }),
-          new AnimateRectKey({ x: -40, y: -10, width: 0, height: 1100, sleep: 50 }),
-        ],
-        {
-          color: p5.color("#00130E"),
-          easing: 0.15,
-        }
-      ),
-      new AnimateText(
-        p5,
-        "REPLAY",
-        200,
-        [
-          new AnimateTextKey({ x: 1920 / 2, y: 1080 / 2, alpha: 0, sleep: 20 }),
-          new AnimateTextKey({ x: 1920 / 2, y: 1080 / 2, alpha: 255, sleep: 0 }),
-          new AnimateTextKey({ x: 1920 / 2, y: 1080 / 2, alpha: 0, sleep: 64 }),
-        ],
-        {
-          font: noto,
-          textColor: p5.color("white"),
-          hAlign: p5.CENTER,
-          vAlign: p5.CENTER,
-        }
-      ),
+      new AnimateVideo(p5, replayVideo),
     ];
+
+    nodecg.listenFor('overlay:replay:stop', (event) => {
+      const cutIn = new AnimateVideo(p5, replayVideo)
+      cutIn.onended(() => {
+        this.isStopped = true;
+      })
+      
+      this.entityList = [
+        new AnimateImage(p5, 
+          replayImage, 
+          [
+            new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080, sleep: 100 }),
+            new AnimateImageKey(replayImage, { x: 0, y: 0, width: 1920, height: 1080, alpha: 0 }),
+          ],
+          { easing: 0.1 }
+        ),
+        cutIn,
+      ];
+    })
+  }
+
+  override isFinished(): boolean {
+    return this.isStopped;
   }
 }

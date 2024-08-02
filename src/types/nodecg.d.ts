@@ -5,5 +5,8 @@ export type NodecgInstance = CreateNodecgInstance<
     "temp-bundle",
     undefined,
     ReplicantMap,
-    {}
+    {
+        'overlay:replay:start': {};
+        'overlay:replay:stop': {};
+    }
 >;

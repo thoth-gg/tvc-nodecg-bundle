@@ -16,20 +16,21 @@ export class RolandDevice {
   constructor(port: SerialPort) {
     this.port = port
 
-    this.port.on('data', (data) => {
-      data.toString().split("").forEach((char: string) => {
-        if (char == ACK) {
-          this.receivedCommandList.push(new Command(ACK))
-          return
-        }
-        if (char == EXIT_CODE) {
-          this.receivedCommandList.push(new Command(this.line.slice(1, 4),  this.line.slice(5).split(',')))
-          this.line = ''
-        } else {
-          this.line += char
-        }
-      })
-    })
+  //   this.port.on('data', (data) => {
+  //     data.toString().split("").forEach((char: string) => {
+  //       if (char == ACK) {
+  //         this.receivedCommandList.push(new Command(ACK))
+  //         return
+  //       }
+  //       if (char == EXIT_CODE) {
+  //         this.receivedCommandList.push(new Command(this.line.slice(1, 4),  this.line.slice(5).split(',')))
+  //         console.log(this.line)
+  //         this.line = ''
+  //       } else {
+  //         this.line += char
+  //       }
+  //     })
+  //   })
   }
 
   static async connectRoland(portList: SerialPort[]): Promise<SerialPort> {
@@ -62,21 +63,45 @@ export class RolandDevice {
       }
       cmd += EXIT_CODE
 
-      this.port.write(Buffer.from(cmd))
-      
-      const expectCode = command == 'VER' || command.startsWith("Q") ? command : ACK
+      const isAck = command != 'VER' && !command.startsWith("Q")
 
-      for (let i = 0; i < 100; i++) {
-        const receivedCommand = this.receivedCommandList.find(c => c.code == expectCode)
-        if (!receivedCommand) {
-          await sleep(10)
-          continue
+      const timeout = setTimeout(() => {
+        reject('timeout')
+      }, 1000)
+
+      let response = ''
+      this.port.on('data', (data) => {
+        response += data.toString()
+        if(isAck) {
+          if (response == ACK) {
+            this.port.removeAllListeners('data')
+            clearTimeout(timeout)
+            resolve(new Command(ACK))
+          }
+        } else {
+          if (response.endsWith(EXIT_CODE)) {
+            console.log(response)
+            this.port.removeAllListeners('data')
+            clearTimeout(timeout)
+            resolve(new Command(response.slice(1, 4), response.slice(5, -1).split(',')))
+          }
         }
-        this.receivedCommandList = this.receivedCommandList.filter(c => c != receivedCommand)
-        resolve(receivedCommand)
-      }
+      })
+      this.port.write(Buffer.from(cmd))
 
-      reject('timeout')
+     
+
+      // for (let i = 0; i < 100; i++) {
+      //   const receivedCommand = this.receivedCommandList.find(c => c.code == expectCode)
+      //   if (!receivedCommand) {
+      //     await sleep(10)
+      //     continue
+      //   }
+      //   this.receivedCommandList = this.receivedCommandList.filter(c => c != receivedCommand)
+      //   resolve(receivedCommand)
+      // }
+
+      // reject('timeout')
     })
   }
 }

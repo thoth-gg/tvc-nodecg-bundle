@@ -20,8 +20,14 @@ export abstract class DrawableEntitySet extends DrawableEntity {
       this.p5.pop();
     });
   }
+
+  isFinished() {
+    return false;
+  }
 }
 
 export abstract class DrawableScene extends DrawableEntitySet {}
 
-export abstract class DrawableOverlay extends DrawableEntitySet {}
+export abstract class DrawableOverlay extends DrawableEntitySet {
+  abstract isFinished(): boolean;
+}

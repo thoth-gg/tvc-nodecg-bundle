@@ -1,11 +1,6 @@
 import Stats from "stats.js";
 import p5js, { Renderer } from "p5";
 
-// const exampleReplicant = nodecg.Replicant<ExampleReplicant>('exampleReplicant');
-// exampleReplicant.on('change', (newVal) => {
-// 	console.log(newVal);
-// });
-
 // Component
 import { preload as fontPreload } from "./src/constant/font.ts";
 import {
@@ -20,6 +15,7 @@ import {
   TeamList,
   searchPlayer,
 } from "./src/constant/team.ts";
+import { AboutGameSceneInfo, AboutThothSceneInfo, GreenSceneInfo, MapSceneInfo, OverlaySceneInfo, PleaseWaitSceneInfo, ReplaySceneInfo, RulesSceneInfo, Scene, SceneInfo, ScheduleSceneInfo, ThothIconSceneInfo, ThothImageSceneInfo, TournamentLogoSceneInfo } from "../types/scene.ts";
 
 // Scene
 import { AboutGameScene } from "./src/scenes/about-game.ts";
@@ -47,10 +43,6 @@ import { globalPrepare } from "./src/global/index.ts";
 import { DrawableEntity } from "./src/interfaces/entity.ts";
 import { ReplayScene } from "./src/scenes/replay.ts";
 
-const defaultValue = `{
-  "scene": "replay"
-}
-`;
 // State
 const debug = document.location.search.includes("debug");
 
@@ -74,7 +66,7 @@ const sketch = (p5: p5js) => {
   };
   p5.setup = () => {
     renderer = p5.createCanvas(1920, 1080);
-    setScene({ scene: "green" });
+    setScene(new AboutGameSceneInfo());
 
     renderer.elt.addEventListener("click", async () => {
       await navigator.clipboard.writeText(
@@ -86,16 +78,16 @@ const sketch = (p5: p5js) => {
     });
   };
 
-  let cnt = 0;
-  p5.keyPressed = () => {
-    cnt++;
-    console.log(cnt);
-    if (cnt % 2 === 0) { 
-      setScene({ scene: "green" });
-    } else {
-      setScene({ scene: "replay" });
-    }
-  }
+  // let cnt = 0;
+  // p5.keyPressed = () => {
+  //   cnt++;
+  //   console.log(cnt);
+  //   if (cnt % 2 === 0) { 
+  //     setScene(new GreenSceneInfo());
+  //   } else {
+  //     setScene(new ReplaySceneInfo());
+  //   }
+  // }
 
   p5.draw = () => {
     stats.begin();
@@ -103,77 +95,82 @@ const sketch = (p5: p5js) => {
     stats.end();
   };
 
-  function setScene(data: any) {
-    const player = searchPlayer(data.player);
-    switch (data.scene) {
-      case "about-game":
-        currentScene = new AboutGameScene(p5);
-        break;
-      case "about-thoth":
-        currentScene = new AboutThothScene(p5);
-        break;
-      case "thoth-icon":
-        currentScene = new ThothIconScene(p5);
-        break;
-      case "thoth-image":
-        currentScene = new ThothImageScene(p5);
-        break;
-      case "map":
-        currentScene = new MapScene(p5);
-        break;
-      case "schedule":
-        currentScene = new ScheduleScene(p5);
-        break;
-      case "new-team-name":
-        currentScene = new NewTeamNameScene(p5, TeamList.SCS);
-        break;
-      case "please-wait":
-        currentScene = new PleaseWaitScene(p5);
-        break;
-      case "profile":
-        if (player) currentScene = new ProfileScene(p5, player);
-        break;
-      case "rules":
-        currentScene = new RulesScene(p5);
-        break;
-      case "team-roaster":
-        currentScene = new TeamRoasterScene(p5, TeamList[data.team]);
-        break;
-      case "tournament-logo":
-        currentScene = new TournamentLogoScene(p5);
-        break;
-      case "map-winner":
-        currentScene = new MapWinnerScene(p5, TeamList[data.team]);
-        break;
-      case "winner":
-        currentScene = new WinnerScene(p5, TeamList[data.team]);
-        break;
-      case "award":
-        if (player) currentScene = new AwardScene(p5, data.title, player);
-        break;
-      case "award-present":
-        currentScene = new AwardPresentScene(p5, data.present);
-        break;
-      case "wait-timer":
-        currentScene = new WaitTimerScene(p5, data.timer, data.result);
-        break;
-      case "battle-card":
-        currentScene = new BattleCardScene(
-          p5,
-          TeamList[data.team1],
-          TeamList[data.team2]
-        );
-        break;
-      case "overlay":
-        currentScene = new OverlayScene(p5, data.type);
-        break;
-      case "green":
-        currentScene = new GreenScene(p5);
-        break;
-      case "replay":
-        currentScene = new ReplayScene(p5);
-        break;
+  nodecg.Replicant('scene').on('change', setScene);
+
+  function setScene(sceneInfo: SceneInfo) {
+    // const player = searchPlayer(data.player);
+    if (sceneInfo.scene == AboutGameSceneInfo.name) {
+      currentScene = new AboutGameScene(p5);
     }
+    if (sceneInfo.scene == AboutThothSceneInfo.name) {
+      currentScene = new AboutThothScene(p5);
+    }
+    if (sceneInfo.scene == ThothIconSceneInfo.name) {
+      currentScene = new ThothIconScene(p5);
+    }
+    if (sceneInfo.scene == ThothImageSceneInfo.name) {
+      currentScene = new ThothImageScene(p5);
+    }
+    if (sceneInfo.scene == MapSceneInfo.name) {
+      currentScene = new MapScene(p5);
+    }
+    if (sceneInfo.scene == ScheduleSceneInfo.name) {
+      currentScene = new ScheduleScene(p5);
+    }
+    if (sceneInfo.scene == PleaseWaitSceneInfo.name) {
+      currentScene = new PleaseWaitScene(p5);
+    }
+    if (sceneInfo.scene == RulesSceneInfo.name) {
+      currentScene = new RulesScene(p5);
+    }
+    if (sceneInfo.scene == GreenSceneInfo.name) {
+      currentScene = new GreenScene(p5);
+    }
+    if (sceneInfo.scene == ReplaySceneInfo.name) {
+      currentScene = new ReplayScene(p5);
+    }
+    if (sceneInfo.scene == TournamentLogoSceneInfo.name) {
+      currentScene = new TournamentLogoScene(p5);
+    }
+    if (sceneInfo.scene == OverlaySceneInfo.name) {
+      currentScene = new OverlayScene(p5);
+    }
+    // switch (data.scene) {
+    //   case "new-team-name":
+    //     currentScene = new NewTeamNameScene(p5, TeamList.SCS);
+    //     break;
+    //   case "profile":
+    //     if (player) currentScene = new ProfileScene(p5, player);
+    //     break;
+    //   case "team-roaster":
+    //     currentScene = new TeamRoasterScene(p5, TeamList[data.team]);
+    //     break;
+    //   case "map-winner":
+    //     currentScene = new MapWinnerScene(p5, TeamList[data.team]);
+    //     break;
+    //   case "winner":
+    //     currentScene = new WinnerScene(p5, TeamList[data.team]);
+    //     break;
+    //   case "award":
+    //     if (player) currentScene = new AwardScene(p5, data.title, player);
+    //     break;
+    //   case "award-present":
+    //     currentScene = new AwardPresentScene(p5, data.present);
+    //     break;
+    //   case "wait-timer":
+    //     currentScene = new WaitTimerScene(p5, data.timer, data.result);
+    //     break;
+    //   case "battle-card":
+    //     currentScene = new BattleCardScene(
+    //       p5,
+    //       TeamList[data.team1],
+    //       TeamList[data.team2]
+    //     );
+    //     break;
+    //   case "overlay":
+    //     currentScene = new OverlayScene(p5, data.type);
+    //     break; 
+    // }
   }
 };
 

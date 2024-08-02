@@ -29,6 +29,20 @@
         "headerColor": "#525F78"
       },
       {
+        "name": "slide",
+        "title": "スライド",
+        "width": 2,
+        "file": "slide/index.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "overlay",
+        "title": "オーバーレイ",
+        "width": 2,
+        "file": "overlay/index.html",
+        "headerColor": "#525F78"
+      },
+      {
         "name": "timer",
         "title": "タイマー",
         "width": 4,

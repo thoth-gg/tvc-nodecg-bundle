@@ -3,6 +3,7 @@ import { DrawableEntity } from "../interfaces/entity.js";
 
 export class AnimateVideo extends DrawableEntity {
   video: MediaElement;
+  isFinished: boolean = false;
 
   constructor(
     p5: p5js,
@@ -11,6 +12,9 @@ export class AnimateVideo extends DrawableEntity {
   ) {
     super(p5);
     this.video = video;
+    this.video.onended(() => {
+      this.isFinished = true;
+    });
     if (isLoop) {
       this.video.loop();
     } else {
@@ -21,5 +25,9 @@ export class AnimateVideo extends DrawableEntity {
 
   draw() {
     this.p5.image(this.video, 0, 0, this.p5.width, this.p5.height);
+  }
+  
+  onended(callback: () => void) {
+    this.video.onended(callback);
   }
 }
