@@ -1,4 +1,4 @@
-import { Scene, SceneInfo } from "./scene";
+import { SceneInfo, TournamentLogoSceneInfo } from "./scene";
 
 export type ReplicantMap = {
   program: number;
@@ -12,7 +12,7 @@ export const replicantDefaultValues: ReplicantMap = {
   program: 0,
   preview: 0,
   prompter: 'Thoth Prompter',
-  scene: Scene.AboutGame(),
+  scene: new TournamentLogoSceneInfo(),
   overlay: {
     replay: false,
   },

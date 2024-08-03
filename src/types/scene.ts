@@ -2,12 +2,6 @@ export class SceneInfo {
   scene: string = this.constructor.name;
 }
 
-export const Scene = {
-  AboutGame: () => new AboutGameSceneInfo(),
-  AboutThoth: () => new AboutThothSceneInfo(),
-
-}
-
 export class AboutGameSceneInfo extends SceneInfo {}
 
 export class AboutThothSceneInfo extends SceneInfo {}

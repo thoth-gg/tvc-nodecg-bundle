@@ -15,7 +15,7 @@ import {
   TeamList,
   searchPlayer,
 } from "./src/constant/team.ts";
-import { AboutGameSceneInfo, AboutThothSceneInfo, GreenSceneInfo, MapSceneInfo, OverlaySceneInfo, PleaseWaitSceneInfo, ReplaySceneInfo, RulesSceneInfo, Scene, SceneInfo, ScheduleSceneInfo, ThothIconSceneInfo, ThothImageSceneInfo, TournamentLogoSceneInfo } from "../types/scene.ts";
+import { AboutGameSceneInfo, AboutThothSceneInfo, GreenSceneInfo, MapSceneInfo, OverlaySceneInfo, PleaseWaitSceneInfo, ReplaySceneInfo, RulesSceneInfo, SceneInfo, ScheduleSceneInfo, ThothIconSceneInfo, ThothImageSceneInfo, TournamentLogoSceneInfo } from "../types/scene.ts";
 
 // Scene
 import { AboutGameScene } from "./src/scenes/about-game.ts";
@@ -43,6 +43,8 @@ import { globalPrepare } from "./src/global/index.ts";
 import { DrawableEntity } from "./src/interfaces/entity.ts";
 import { ReplayScene } from "./src/scenes/replay.ts";
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // State
 const debug = document.location.search.includes("debug");
 
@@ -66,28 +68,15 @@ const sketch = (p5: p5js) => {
   };
   p5.setup = () => {
     renderer = p5.createCanvas(1920, 1080);
-    setScene(new AboutGameSceneInfo());
+    currentScene = new TournamentLogoScene(p5);
 
     renderer.elt.addEventListener("click", async () => {
       await navigator.clipboard.writeText(
         `${Math.round(p5.mouseX)}, ${Math.round(p5.mouseY)}`
       );
     });
-    renderer.elt.addEventListener("dblclick", () => {
-      p5.fullscreen(true);
-    });
+    renderer.elt.addEventListener("dblclick", () => p5.fullscreen(true));
   };
-
-  // let cnt = 0;
-  // p5.keyPressed = () => {
-  //   cnt++;
-  //   console.log(cnt);
-  //   if (cnt % 2 === 0) { 
-  //     setScene(new GreenSceneInfo());
-  //   } else {
-  //     setScene(new ReplaySceneInfo());
-  //   }
-  // }
 
   p5.draw = () => {
     stats.begin();
@@ -95,9 +84,10 @@ const sketch = (p5: p5js) => {
     stats.end();
   };
 
-  nodecg.Replicant('scene').on('change', setScene);
-
-  function setScene(sceneInfo: SceneInfo) {
+  nodecg.Replicant('scene').on('change', async (sceneInfo: SceneInfo, oldSceneInfo?: SceneInfo) => {
+    if(oldSceneInfo?.scene == OverlaySceneInfo.name) {
+      await sleep(200);
+    }
     // const player = searchPlayer(data.player);
     if (sceneInfo.scene == AboutGameSceneInfo.name) {
       currentScene = new AboutGameScene(p5);
@@ -133,6 +123,7 @@ const sketch = (p5: p5js) => {
       currentScene = new TournamentLogoScene(p5);
     }
     if (sceneInfo.scene == OverlaySceneInfo.name) {
+      await sleep(200);
       currentScene = new OverlayScene(p5);
     }
     // switch (data.scene) {
@@ -171,7 +162,7 @@ const sketch = (p5: p5js) => {
     //     currentScene = new OverlayScene(p5, data.type);
     //     break; 
     // }
-  }
+  });
 };
 
 new p5js(sketch);
