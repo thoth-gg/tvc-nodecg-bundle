@@ -9,7 +9,7 @@ import {
 } from "../../types/scene";
 import { OverlayInfo } from "../../types/replicant";
 
-const isEnabled = true;
+const isEnabled = false;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function initRoland(nodecg: NodeCG.ServerAPI) {

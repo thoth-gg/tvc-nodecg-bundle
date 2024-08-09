@@ -56,6 +56,7 @@ if (debug) {
 }
 
 let currentScene: DrawableEntity | null = null;
+const subWin = window.open("sub_screen.html", "window_name", "width=600,height=400");
 
 let renderer: Renderer;
 const sketch = (p5: p5js) => {
@@ -81,6 +82,7 @@ const sketch = (p5: p5js) => {
   p5.draw = () => {
     stats.begin();
     currentScene?.draw();
+    subWin?.document.querySelector("canvas")?.getContext('2d')?.putImageData(p5.drawingContext.getImageData(0, 0, p5.width * 2, p5.height * 2), 0, 0);
     stats.end();
   };
 
